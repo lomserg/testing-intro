@@ -1,7 +1,17 @@
-const products = require('../../src/data/products');
-const { filterByCategory } = require('../../src/catalog');
+const products = require("../../src/data/products");
+const { filterByCategory } = require("../../src/catalog");
 
-describe('filterByCategory', () => {
+describe("filterByCategory", () => {
+  test("'all' возвращает товары с ID [1, 2, 3, 4, 5, 6]", () => {
+    expect(filterByCategory(products, "all").map((p) => p.id)).toEqual([
+      1, 2, 3, 4, 5, 6,
+    ]);
+  });
+  test("undefined возвращает товары с ID [1, 2, 3, 4, 5, 6]", () => {
+    expect(filterByCategory(products, undefined).map((p) => p.id)).toEqual([
+      1, 2, 3, 4, 5, 6,
+    ]);
+  });
   test.todo("'all' возвращает товары с ID [1, 2, 3, 4, 5, 6]");
   test.todo("undefined возвращает товары с ID [1, 2, 3, 4, 5, 6]");
   test.todo("пустая строка возвращает товары с ID [1, 2, 3, 4, 5, 6]");
