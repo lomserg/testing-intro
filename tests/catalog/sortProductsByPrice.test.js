@@ -71,5 +71,4 @@ describe("sortProductsByPrice", () => {
     sortProductsByPrice(products);
     expect(products).toEqual(copyProducts);
   });
-  test.todo("направление по умолчанию не меняет исходный массив всех товаров");
 });
