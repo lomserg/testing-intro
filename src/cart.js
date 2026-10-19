@@ -18,17 +18,54 @@ function addToCart(cart, product, quantity) {
 
   return cartArr;
 }
-function changeQuantity() {
-  return notImplemented();
+function changeQuantity(cart, productId, quantity) {
+  if (quantity <= 0) {
+    throw new RangeError("quantity error");
+  }
+
+  const cartArr = [...cart];
+  const existingProduct = cartArr.find((p) => p.id === productId);
+
+  if (!existingProduct) {
+    return cart;
+  }
+
+  if (quantity > existingProduct.stock) {
+    throw new RangeError("quantity error");
+  }
+
+  existingProduct.quantity = quantity;
+
+  return cartArr;
 }
-function removeFromCart() {
-  return notImplemented();
+function removeFromCart(cart, productId) {
+  return cart.filter((product) => product.id !== productId);
 }
-function calculateCartSubtotal() {
-  return notImplemented();
+
+function calculateCartSubtotal(cart) {
+  return cart.reduce(
+    (sum, product) => sum + product.price * product.quantity,
+    0,
+  );
 }
-function calculateOrderTotal() {
-  return notImplemented();
+
+function calculateOrderTotal(cart, promoCode) {
+  const subtotal = calculateCartSubtotal(cart);
+
+  const discount =
+    promoCode === "SAVE10" && subtotal >= 20000
+      ? Math.round(subtotal * 0.1)
+      : 0;
+
+  const delivery = subtotal < 50000 ? 30000 : 0;
+  const total = subtotal - discount + delivery;
+
+  return {
+    subtotal,
+    discount,
+    delivery,
+    total,
+  };
 }
 
 const cartApi = {
